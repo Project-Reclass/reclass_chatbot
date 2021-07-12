@@ -1,2 +1,2 @@
-# reclass_chatbot
+# Chatbot
 A chat application to demonstrate the usefulness of Kubernetes
