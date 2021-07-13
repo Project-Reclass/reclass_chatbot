@@ -48,20 +48,29 @@ func GetLatestId() (int, bool, error) {
 	return lastId, true, nil
 }
 
-func MainOutput(out io.Writer) {
-
+func GetDate() string {
 	//Creating properly formatted time
 	current := time.Now()
 	currentFormat := current.Format(time.RubyDate)
 	datept1 := regexp.MustCompile(`[a-zA-Z]+\s[a-zA-Z]+\s[0-9]*`)
 	datept2 := regexp.MustCompile(`[0-9]*:[0-9]*:[0-9]*`)
 	datept3 := regexp.MustCompile(`-[0-9]*`)
+	timezone, _ := time.Now().Zone()
 	finalDate := fmt.Sprintf(
-		"%s %d %s GMT%s (Central Daylight Time)",
+		"%s %d %s GMT%s (%s)",
 		datept1.FindStringSubmatch(currentFormat)[0],
 		time.Now().Year(),
 		datept2.FindStringSubmatch(currentFormat)[0],
-		datept3.FindStringSubmatch(currentFormat)[0])
+		datept3.FindStringSubmatch(currentFormat)[0],
+		timezone)
+
+	return finalDate
+}
+
+func MainOutput(out io.Writer) {
+
+	//Creating properly formatted time
+	finalDate := GetDate()
 
 	// Putting together post via Text struct
 	// Catch exception here! If valid is false but error is true
