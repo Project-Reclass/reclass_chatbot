@@ -17,13 +17,11 @@ func TestOutput(t *testing.T) {
 		t.Fatalf("Got: %s - Want: %s\n", got, want)
 	}
 
-	/*
-		prevId, err := GetLatestId()
-		if err != nil {
-			t.Fatalf(err.Error())
-		} else if prevId < 0 {
-			t.Fatalf("Invalid: GetLatestId() returns a negative ID")
-		}
-	*/
+	prevId, err := GetLatestId()
+	if err != nil {
+		t.Fatalf(err.Error())
+	} else if prevId < 0 {
+		t.Fatalf("Invalid: GetLatestId() returns a negative ID")
+	}
 
 }

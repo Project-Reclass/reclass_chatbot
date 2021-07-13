@@ -57,14 +57,14 @@ func MainOutput(out io.Writer) {
 	// Putting together post via Text struct
 	prevId, err := GetLatestId()
 	if err != nil {
-		fmt.Fprintln(out, err)
+		panic(err)
 	}
 	text := Text{prevId + 1, finalDate, "Reclass Bot", finalDate}
 
 	// Marshal the string to json
 	jsonReq, err := json.Marshal(text)
 	if err != nil {
-		fmt.Fprintln(out, err)
+		panic(err)
 	}
 
 	// POST the json to the API
@@ -73,7 +73,7 @@ func MainOutput(out io.Writer) {
 		"application/json; charset=utf-8",
 		bytes.NewBuffer(jsonReq))
 	if err != nil {
-		fmt.Fprintln(out, err)
+		panic(err)
 	}
 	defer resp.Body.Close()
 	bodyBytes, _ := ioutil.ReadAll(resp.Body)
