@@ -69,7 +69,6 @@ func MainOutput(out io.Writer) {
 	if err != nil {
 		panic(err)
 	}
-	//fmt.Println(string(body))
 	prevId, err := GetLatestId(body)
 	if err != nil {
 		panic(err)
@@ -79,7 +78,6 @@ func MainOutput(out io.Writer) {
 	if err != nil {
 		panic(err)
 	}
-	//fmt.Println(string(jsonpost))
 	// POST the json to the API
 	resp, err := http.Post(
 		"http://192.168.49.2:30660/api/messages",
