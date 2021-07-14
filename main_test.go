@@ -9,7 +9,7 @@ func TestOutput(t *testing.T) {
 
 	// Check if CreatePost creates post with correct ID
 	// CreatePost(prevId int) ([]byte, error)
-	post, err := CreatePost(10)
+	post, err := CreatePost(10, "Test Robot", "Hello World")
 	if err != nil {
 		t.Fatal(err)
 	}

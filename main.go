@@ -8,6 +8,7 @@ package main
 import (
 	"bytes"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -43,12 +44,11 @@ func GetLatestId(body []byte) (int, error) {
 }
 
 // Given the greatest existing ID in the API, this creates json for a new post
-func CreatePost(prevId int) ([]byte, error) {
+func CreatePost(prevId int, username string, message string) ([]byte, error) {
 	//Creating properly formatted time
-	current := time.Now()
-	finalDate := current.Format("Mon Jan 2 2006 15:04:05 GMT-0700 (MST)")
+	current := time.Now().Format("Mon Jan 2 2006 15:04:05 GMT-0700 (MST)")
 
-	text := Text{prevId + 1, finalDate, "Reclass Bot", finalDate}
+	text := Text{prevId + 1, message, username, current}
 
 	// Marshal the string to json
 	jsonReq, err := json.Marshal(text)
@@ -58,7 +58,7 @@ func CreatePost(prevId int) ([]byte, error) {
 	return jsonReq, nil
 }
 
-func MainOutput(out io.Writer) {
+func MainOutput(out io.Writer, username string, message string) {
 	// Use the imported net/http to 'get' request and read from the API
 	botAPI, err := http.Get("http://192.168.49.2:30660/api/messages")
 	if err != nil {
@@ -74,7 +74,7 @@ func MainOutput(out io.Writer) {
 		panic(err)
 	}
 	// Create the post with the correct ID
-	jsonpost, err := CreatePost(prevId)
+	jsonpost, err := CreatePost(prevId, username, message)
 	if err != nil {
 		panic(err)
 	}
@@ -97,5 +97,18 @@ func MainOutput(out io.Writer) {
 }
 
 func main() {
-	MainOutput(os.Stdout)
+	current := time.Now().Format("Mon Jan 2 2006 15:04:05 GMT-0700 (MST)")
+	var (
+		username = flag.String("username", "Reclass Robot", "a string")
+		message  = flag.String("message", current, "a string")
+		interval = flag.Int("interval", 1, "an int")
+	)
+	flag.Parse()
+
+	// Set up the ticker
+	duration := time.Duration(*interval) * time.Second
+	tick := time.NewTicker(duration)
+	for range tick.C {
+		MainOutput(os.Stdout, *username, *message)
+	}
 }
