@@ -106,9 +106,9 @@ func main() {
 	// Repeatedly call the MainOutput() function
 	var timer *time.Timer
 	upperRange := *interval
+	rand.Seed(time.Now().UnixNano())
 	for {
 		if *random {
-			rand.Seed(time.Now().UnixNano())
 			*interval = rand.Intn(upperRange)
 			fmt.Println("delaying " + fmt.Sprint(*interval) + " seconds")
 		}
