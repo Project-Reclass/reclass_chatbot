@@ -103,12 +103,14 @@ func main() {
 	)
 	flag.Parse()
 
-	// Set up the loop
+	// Repeatedly call the MainOutput() function
 	var timer *time.Timer
+	upperRange := *interval
 	for {
 		if *random {
-			*interval = rand.Intn(*interval)
-			//fmt.Println("delaying " + fmt.Sprint(*interval) + " seconds")
+			rand.Seed(time.Now().UnixNano())
+			*interval = rand.Intn(upperRange)
+			fmt.Println("delaying " + fmt.Sprint(*interval) + " seconds")
 		}
 		timer = time.NewTimer(time.Duration(*interval) * time.Second)
 		<-timer.C
