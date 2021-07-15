@@ -1,6 +1,6 @@
 # Chatbot
 A chat application to eventually demonstrate the usefulness of Kubernetes
-## About
+### About
 
 This chatbot posts to a Chatback application API (see Cloning & Setup below) periodically. The username, message, and the posting intervals can be specified using CLI commands (see CLI Commands).
 
@@ -12,7 +12,7 @@ This chatbot posts to a Chatback application API (see Cloning & Setup below) per
 - [Git](https://git-scm.com/downloads)
 - [golangci-lint (Optional)](https://golangci-lint.run/usage/install/#local-installation) - Used for running lint on your development machine.
 - [Minikube](https://minikube.sigs.k8s.io/docs/start/)
-- [Docker] (https://docs.docker.com/engine/install/) - recommended, can use other container or VM
+- [Docker](https://docs.docker.com/engine/install/) - recommended, can use other container or VM
 
 ### Cloning & Setup
 
