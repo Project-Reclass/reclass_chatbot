@@ -1,10 +1,5 @@
 package main
 
-//Start here: Do unit testing by outsourcing the logic and testing
-//those helper functions individually. E.g. do post and get, then
-//pass the result to helper functions. Then test those helper functions
-//with sample get and post results boi.
-
 import (
 	"bytes"
 	"encoding/json"
@@ -12,6 +7,7 @@ import (
 	"fmt"
 	"io"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"os"
 	"time"
@@ -97,18 +93,27 @@ func MainOutput(out io.Writer, username string, message string) {
 }
 
 func main() {
+
 	current := time.Now().Format("Mon Jan 2 2006 15:04:05 GMT-0700 (MST)")
 	var (
 		username = flag.String("username", "Reclass Robot", "a string")
 		message  = flag.String("message", current, "a string")
-		interval = flag.Int("interval", 1, "an int")
+		interval = flag.Int("interval", 3, "an int")
+		random   = flag.Bool("random", false, "a boolean")
 	)
 	flag.Parse()
 
-	// Set up the ticker
-	duration := time.Duration(*interval) * time.Second
-	tick := time.NewTicker(duration)
-	for range tick.C {
+	// Repeatedly call the MainOutput() function
+	var timer *time.Timer
+	upperRange := *interval
+	for {
+		if *random {
+			rand.Seed(time.Now().UnixNano())
+			*interval = rand.Intn(upperRange)
+			fmt.Println("delaying " + fmt.Sprint(*interval) + " seconds")
+		}
+		timer = time.NewTimer(time.Duration(*interval) * time.Second)
+		<-timer.C
 		MainOutput(os.Stdout, *username, *message)
 	}
 }
