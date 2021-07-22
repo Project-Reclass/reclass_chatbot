@@ -25,6 +25,8 @@ jobs:
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
       
-    - name: Push the Docker image
+    - name: Tag the Docker image
       run: docker tag my-image-name:$(date +%s) projectreclass/chatbots
-        docker push projectreclass/chatbots
+        
+    - name: Push the Docker image
+      run: docker push projectreclass/chatbots
