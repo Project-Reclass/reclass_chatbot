@@ -94,6 +94,8 @@ func MainOutput(out io.Writer, username string, message string) {
 
 func main() {
 
+	fmt.Println("The program has started!")
+
 	current := time.Now().Format("Mon Jan 2 2006 15:04:05 GMT-0700 (MST)")
 	var (
 		username = flag.String("username", "Reclass Robot", "a string")
