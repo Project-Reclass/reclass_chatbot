@@ -11,6 +11,8 @@ import (
 	"net/http"
 	"os"
 	"time"
+
+	"rsc.io/quote"
 )
 
 type Text struct {
@@ -56,7 +58,7 @@ func CreatePost(prevId int, username string, message string) ([]byte, error) {
 
 func MainOutput(out io.Writer, username string, message string) {
 	// Use the imported net/http to 'get' request and read from the API
-	botAPI, err := http.Get("http://192.168.49.2:30660/api/messages")
+	botAPI, err := http.Get("http://192.168.49.2:31592/api/messages")
 	if err != nil {
 		panic(err)
 	}
@@ -76,7 +78,7 @@ func MainOutput(out io.Writer, username string, message string) {
 	}
 	// POST the json to the API
 	resp, err := http.Post(
-		"http://192.168.49.2:30660/api/messages",
+		"http://192.168.49.2:31592/api/messages",
 		"application/json; charset=utf-8",
 		bytes.NewBuffer(jsonpost))
 	if err != nil {
@@ -104,6 +106,27 @@ func main() {
 		random   = flag.Bool("random", false, "a boolean")
 	)
 	flag.Parse()
+
+	switch *username {
+	case "Tay":
+		*message = quote.Hello()
+		*random = false
+		*interval = 3
+	case "Kunal":
+		*message = quote.Glass()
+		*random = false
+		*interval = 5
+	case "Theo":
+		*message = quote.Go()
+		*random = false
+		*interval = 7
+	case "Scott":
+		*message = quote.Opt()
+		*random = false
+		*interval = 9
+	default:
+		fmt.Println("Custom bot in use...")
+	}
 
 	// Repeatedly call the MainOutput() function
 	var timer *time.Timer
