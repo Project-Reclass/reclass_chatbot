@@ -16,37 +16,17 @@ import (
 )
 
 type Text struct {
-	UserID   int    `json:"id"`
 	Content  string `json:"content"`
 	Username string `json:"username"`
 	Date     string `json:"created"`
 }
 
-// Return the greatest existing post ID in API, regardless of order
-func GetLatestId(body []byte) (int, error) {
-	// Unmarshal the body string into structs using Cont
-	var tex []Text
-	if marshalError := json.Unmarshal(body, &tex); marshalError != nil {
-		return 0, marshalError
-	}
-
-	// Grab the greatest of all post IDs
-	lastId := 0
-	for i := 0; i < len(tex); i++ {
-		thisId := tex[i].UserID
-		if thisId > lastId {
-			lastId = thisId
-		}
-	}
-	return lastId, nil
-}
-
 // Given the greatest existing ID in the API, this creates json for a new post
-func CreatePost(prevId int, username string, message string) ([]byte, error) {
+func CreatePost(username string, message string) ([]byte, error) {
 	//Creating properly formatted time
 	current := time.Now().Format("Mon Jan 2 2006 15:04:05 GMT-0700 (MST)")
 
-	text := Text{prevId + 1, message, username, current}
+	text := Text{message, username, current}
 
 	// Marshal the string to json
 	jsonReq, err := json.Marshal(text)
@@ -57,28 +37,30 @@ func CreatePost(prevId int, username string, message string) ([]byte, error) {
 }
 
 func MainOutput(out io.Writer, username string, message string) {
+	//testing
+	apiurl := os.Getenv("CHATBACK_URL")
+	if apiurl == "" {
+		panic("You must set the API environment variable using 'expose CHATBACK_URL={ chatback url }'")
+	}
+
+	fmt.Println(apiurl)
+	//apiurl := os.Getenv("CHATBACK_URL")
+
 	// Use the imported net/http to 'get' request and read from the API
-	botAPI, err := http.Get("http://192.168.49.2:31592/api/messages")
+	botAPI, err := http.Get(apiurl)
 	if err != nil {
 		panic(err)
 	}
 	defer botAPI.Body.Close()
-	body, err := ioutil.ReadAll(botAPI.Body)
-	if err != nil {
-		panic(err)
-	}
-	prevId, err := GetLatestId(body)
-	if err != nil {
-		panic(err)
-	}
+
 	// Create the post with the correct ID
-	jsonpost, err := CreatePost(prevId, username, message)
+	jsonpost, err := CreatePost(username, message)
 	if err != nil {
 		panic(err)
 	}
 	// POST the json to the API
 	resp, err := http.Post(
-		"http://192.168.49.2:31592/api/messages",
+		apiurl,
 		"application/json; charset=utf-8",
 		bytes.NewBuffer(jsonpost))
 	if err != nil {
