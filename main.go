@@ -43,9 +43,6 @@ func MainOutput(out io.Writer, username string, message string) {
 		panic("You must set the API environment variable using 'expose CHATBACK_URL={ chatback url }'")
 	}
 
-	fmt.Println(apiurl)
-	//apiurl := os.Getenv("CHATBACK_URL")
-
 	// Use the imported net/http to 'get' request and read from the API
 	botAPI, err := http.Get(apiurl)
 	if err != nil {
@@ -86,28 +83,35 @@ func main() {
 		message  = flag.String("message", current, "a string")
 		interval = flag.Int("interval", 3, "an int")
 		random   = flag.Bool("random", false, "a boolean")
+		preset   = flag.String("preset", "", "a string")
 	)
 	flag.Parse()
 
-	switch *username {
+	switch *preset {
 	case "Tay":
+		*username = "Tay"
 		*message = quote.Hello()
 		*random = false
 		*interval = 3
 	case "Kunal":
+		*username = "Kunal"
 		*message = quote.Glass()
 		*random = false
 		*interval = 5
 	case "Theo":
+		*username = "Theo"
 		*message = quote.Go()
 		*random = false
 		*interval = 7
 	case "Scott":
+		*username = "Scott"
 		*message = quote.Opt()
 		*random = false
 		*interval = 9
+	case "":
+		fmt.Println("Custom bot in use (no presets)")
 	default:
-		fmt.Println("Custom bot in use...")
+		fmt.Println("Invalid preset selected. No preset applied.")
 	}
 
 	// Repeatedly call the MainOutput() function
