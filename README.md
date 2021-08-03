@@ -47,6 +47,7 @@ The parameters, however, can be specified with CLI commands. The CLI commands ar
     `-preset` // Overrides and sets username, message, interval, and random with presets. Valid inputs include strings Tay, Kunal, Theo, and Scott
 
 
+
 ## GitHub Actions
 
 This project has 3 CI jobs that run on every push. This jobs can be found in the [.github/workflows/ci.yml](.github/workflows/ci.yml) file.
