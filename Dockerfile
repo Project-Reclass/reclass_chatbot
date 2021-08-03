@@ -12,7 +12,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o chatbot
 FROM scratch
 
 WORKDIR /app
-ENV CHATBACK_URL="http://192.168.49.2:31813/"
 
 COPY --from=builder /app/chatbot/chatbot /app/chatbot
 
