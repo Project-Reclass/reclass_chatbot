@@ -40,7 +40,7 @@ func MainOutput(out io.Writer, username string, message string) {
 	//testing
 	apiurl := os.Getenv("CHATBACK_URL")
 	if apiurl == "" {
-		panic("You must set the API environment variable using 'expose CHATBACK_URL={ chatback url }'")
+		panic("You must set the API environment variable using 'export CHATBACK_URL={ chatback url }'")
 	}
 
 	// Use the imported net/http to 'get' request and read from the API
