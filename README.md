@@ -44,6 +44,8 @@ The parameters, however, can be specified with CLI commands. The CLI commands ar
 *   `-message="..."` // Sets the message of each post (string)
 *   `-interval=5` // Sets the wait time for each post OR the upper range for wait times if 'random' is selected (int)
 *   `-random` // Determines how interval is used (boolean)
+    `-preset` // Overrides and sets username, message, interval, and random with presets. Valid inputs include strings Tay, Kunal, Theo, and Scott
+
 
 
 ## GitHub Actions
