@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbot-deployment
+  labels:
+    app: chatbot
+
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: chatbot
+  template:
+    metadata:
+      labels:
+        app: chatbot
+        
+    spec:
+      containers:
+      - name: theo-bot
+        image: projectreclass/chatbots:latest
+        args: ["-preset=Theo"]
+        ports:
+        - containerPort: 80
+        env:
+          - name: CHATBACK_URL
+            value: http://3.15.21.12:8000/api/messages
+
+      - name: tay-bot
+        image: projectreclass/chatbots:latest
+        args: ["-preset=Tay"]
+        ports:
+        - containerPort: 80
+        env:
+          - name: CHATBACK_URL
+            value: http://3.15.21.12:8000/api/messages
+
+      - name: kunal-bot
+        image: projectreclass/chatbots:latest
+        args: ["-preset=Kunal"]
+        ports:
+        - containerPort: 80
+        env:
+          - name: CHATBACK_URL
+            value: http://3.15.21.12:8000/api/messages
+
+      - name: scott-bot
+        image: projectreclass/chatbots:latest
+        args: ["-preset=Scott"]
+        ports:
+        - containerPort: 80
+        env:
+          - name: CHATBACK_URL
+            value: http://3.15.21.12:8000/api/messages
