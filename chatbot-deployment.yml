@@ -28,42 +28,33 @@ spec:
     spec:
       terminationGracePeriodSeconds: 30
       containers:
-      - name: theo-bot
+      - name: sabine-bot
         image: projectreclass/chatbots:latest
         imagePullPolicy: "Always"
-        args: ["-preset=Theo"]
+        args: ["-preset=Sabine"]
         ports:
         - containerPort: 80
         env:
           - name: CHATBACK_URL
             value: http://3.15.239.232:8000/api/messages
 
-      - name: tay-bot
+      - name: jose-bot
         image: projectreclass/chatbots:latest
         imagePullPolicy: "Always"
-        args: ["-preset=Tay"]
+        args: ["-preset=Jose"]
         ports:
         - containerPort: 80
         env:
           - name: CHATBACK_URL
             value: http://3.15.239.232:8000/api/messages
 
-      - name: kunal-bot
+      - name: josiah-bot
         image: projectreclass/chatbots:latest
         imagePullPolicy: "Always"
-        args: ["-preset=Kunal"]
+        args: ["-preset=Josiah"]
         ports:
         - containerPort: 80
         env:
           - name: CHATBACK_URL
             value: http://3.15.239.232:8000/api/messages
 
-      - name: scott-bot
-        image: projectreclass/chatbots:latest
-        imagePullPolicy: "Always"
-        args: ["-preset=Scott"]
-        ports:
-        - containerPort: 80
-        env:
-          - name: CHATBACK_URL
-            value: http://3.15.239.232:8000/api/messages

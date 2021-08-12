@@ -87,33 +87,53 @@ func main() {
 	)
 	flag.Parse()
 
+	overrideMessage := "Overriding username, message, random with preset"
+	var altMsgArr [3]string
 	switch *preset {
 	case "Tay":
-		fmt.Println("Overriding username, message, random with preset")
+		fmt.Println(overrideMessage)
 		*username = "Tay"
 		*message = quote.Hello()
 		*random = false
 		*interval = 3
 	case "Kunal":
-		fmt.Println("Overriding username, message, random with preset")
+		fmt.Println(overrideMessage)
 		*username = "Kunal"
 		*message = quote.Glass()
 		*random = false
 		*interval = 5
 	case "Theo":
-		fmt.Println("Overriding username, message, random with preset")
+		fmt.Println(overrideMessage)
 		*username = "Theo"
 		*message = quote.Go()
 		*random = false
 		*interval = 7
 	case "Scott":
-		fmt.Println("Overriding username, message, random with preset")
+		fmt.Println(overrideMessage)
 		*username = "Scott"
 		*message = quote.Opt()
 		*random = false
 		*interval = 9
+	case "Sabine":
+		fmt.Println(overrideMessage)
+		*username = "Sabine"
+		altMsgArr = [3]string{"Good morning Project Reclass!","Have you tried opening the ports?","I'm going to move the ticket!"}
+		*random = false
+		*interval = 3
+	case "Jose":
+		fmt.Println(overrideMessage)
+		*username = "Jose"
+		altMsgArr = [3]string{"Friendly reminder to submit your social posts!","How's everyone doing?","When are we going to eat our MREs?"}
+		*random = false
+		*interval = 4
+	case "Josiah":
+		fmt.Println(overrideMessage)
+		*username = "Josiah"
+		altMsgArr = [3]string{"I think we should ask Theo","bruhhh","I pushed the updated Dockerfile!"}
+		*random = false
+		*interval = 5
 	case "":
-		fmt.Println("Custom bot in use (no presets)")
+		fmt.Println("No bot presets in use. Using defaults.")
 	default:
 		fmt.Println("Invalid preset selected. No preset applied.")
 		fmt.Println("Presets include 'Tay','Kunal','Theo','Scott'.")
@@ -127,6 +147,10 @@ func main() {
 		if *random {
 			*interval = rand.Intn(upperRange)
 			fmt.Println("delaying " + fmt.Sprint(*interval) + " seconds")
+		}
+		if altMsgArr != [3]string{} {
+			randMsg := rand.Intn(3)
+			*message = altMsgArr[randMsg]
 		}
 		timer = time.NewTimer(time.Duration(*interval) * time.Second)
 		<-timer.C
