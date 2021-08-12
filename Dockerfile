@@ -15,5 +15,4 @@ WORKDIR /app
 
 COPY --from=builder /app/chatbot/chatbot /app/chatbot
 
-CMD [ "/app/chatbot" ]
-EXPOSE 3000
+ENTRYPOINT [ "/app/chatbot" ]
