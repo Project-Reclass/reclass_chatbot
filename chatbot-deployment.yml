@@ -10,7 +10,7 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: chatbot-deployment
+  name: sabine-bot-deployment
   namespace: chatbot
   labels:
     app: chatbot
@@ -38,16 +38,60 @@ spec:
           - name: CHATBACK_URL
             value: http://3.15.239.232:8000/api/messages
 
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jose-bot-deployment
+  namespace: chatbot
+  labels:
+    app: chatbot
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: chatbot
+  template:
+    metadata:
+      labels:
+        app: chatbot
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
       - name: jose-bot
         image: projectreclass/chatbots:latest
         imagePullPolicy: "Always"
         args: ["-preset=Jose"]
         ports:
-        - containerPort: 80
+          - containerPort: 80
         env:
           - name: CHATBACK_URL
             value: http://3.15.239.232:8000/api/messages
 
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: josiah-bot-deployment
+  namespace: chatbot
+  labels:
+    app: chatbot
+
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: chatbot
+  template:
+    metadata:
+      labels:
+        app: chatbot
+    spec:
+      terminationGracePeriodSeconds: 30
+      containers:
       - name: josiah-bot
         image: projectreclass/chatbots:latest
         imagePullPolicy: "Always"
