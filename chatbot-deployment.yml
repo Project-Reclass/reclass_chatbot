@@ -24,6 +24,7 @@ spec:
     metadata:
       labels:
         app: chatbot
+        name: chatbot_sabine
         
     spec:
       terminationGracePeriodSeconds: 30
@@ -57,6 +58,7 @@ spec:
     metadata:
       labels:
         app: chatbot
+        name: chatbot_jose
     spec:
       terminationGracePeriodSeconds: 30
       containers:
@@ -89,6 +91,7 @@ spec:
     metadata:
       labels:
         app: chatbot
+        name: chatbot_josiah
     spec:
       terminationGracePeriodSeconds: 30
       containers:
